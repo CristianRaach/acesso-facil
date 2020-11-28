@@ -1,0 +1,11 @@
+.code-workspace
+venv
+db.sqlite3
+*.idea
+*.sqlite3
+*.pyc
+*pyc
+media
+.env
+.vscode
+launch.json

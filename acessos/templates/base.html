@@ -1,0 +1,79 @@
+{% load static %}
+{% load bootstrap %}
+
+<!DOCTYPE HTML>
+<html lang="pt-br">
+<head>
+  <title>{% block title %} {% endblock %}</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+  <meta name="author" content="Cristian Raach">
+</head>
+<body>
+    <div class="container">
+        {% if cor_menu %} 
+          {{ cor_menu|safe }}
+        {% else %}
+          <nav id="menus">
+        {% endif %}
+  
+          {% if user.is_authenticated %}
+                <div id="tisul" class="form-row">
+                  <div class="col-6">
+                    <h1>Acesso fácil</h1><a id="a-no-decoration"  onclick="window.open('http://www.raach.com.br/');" href="#"><p> by Cristian Raach</p></a>
+                    
+                      {% if user.first_name %}
+                        <h6 class="h6-login oi">Olá {{ user.first_name }}</h6>
+                      {% else %}
+                        <h6 class="h6-login oi">Olá {{ user.username }}</h6>
+                      {% endif %}
+                    
+                  </div>
+                  <div class="col-6" style="text-align: right">
+                      <p>Your logo here.</p>
+                  </div>
+                </div>
+
+                <div class="text-center" id="menus-botoes">
+                    
+                  {% if user.is_staff %}
+
+                      <a href="{% url 'novo' %}" id="a-no-decoration">
+                        <button type="button" class="btn btn-success"><i class="fas fa-user-plus"></i> Novo Acesso</button>
+                      </a>
+
+                      <a href="{% url 'lista' %}" id="a-no-decoration">
+                        <button class="btn btn-secondary">Lista</button>
+                      </a>
+
+                    {% endif %}
+
+                    <!--<a href="{% url 'login' %}" id="a-no-decoration">
+                      <button class="btn btn-secondary">Inicio</button>
+                    </a>-->
+
+                    <a href="{% url 'logout' %}" id="a-no-decoration">
+                      <button class="btn btn-secondary">Sair</button>
+                    </a>
+                        
+                </div>
+
+          {% endif %}
+
+        </nav>
+        
+      {% block main %}
+      {% endblock %}
+  
+    </div>
+
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/qrcode.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+   
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Esqueci a senha {% endblock %}
+
+{% block main %}
+    <div class="branco">
+        <h1>Esqueci a senha</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group col-md-6">
+                <label class="control-label  " for="id_cpf">Cpf</label>
+                <div class=" ">
+                    <input type="text" name="cpf" minlength="11" class=" form-control" required="" id="id_cpf"> 
+                </div>
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+{% endblock %}

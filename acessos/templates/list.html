@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+
+{% block title %} Lista de Acessos {% endblock %}
+
+{% block main %}
+    <section  class="branco-body">
+        <form method="GET">
+            {% csrf_token %}
+            <p class="control-label">Campo de pesquisa</p>
+            <div class="form-row div-center">
+                
+                <div class="form-group col-md-10">    
+                    <input type="text" class="form-control" placeholder="Insira um nome ou CPF para buscar." name="search" id="search">
+                </div>
+                <div class="form-group col-md-2">  
+                    <button id="buscar-button" class="btn" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
+
+        <ul class="list-group">
+            {% for acesso in acessos %}
+                <li id="item-lista" class="list-group-item">
+
+                        <a href="{% url 'alterar' acesso.id %}" id="a-no-decoration">
+                            <button id="item-lista-nome" type="button" class="btn btn-primary col-md-5">
+                                {{ acesso.nome }}
+                                {% if acesso.ativo %}
+                                    <span class="badge badge-pill badge-secondary" style="background-color: #28a745;">Ativo</span>
+                                {% else %}
+                                    <span class="badge badge-pill badge-secondary" style="background-color:#dc3545;">Desativado</span>
+                                {% endif %}
+                                <span id="item-lista-badge" class="badge badge-light">CPF: {{ acesso.cpf }}</span>
+                            </button>
+                        </a>
+                        
+                        {% if acesso.ativo %}                    
+                            <a href="{% url 'desativar' acesso.id %}" id="a-no-decoration">
+                                <button id="item-lista-botoes" class="btn btn-danger col-md-2" title='Bloquear acesso do usuário {{acesso.nome}}'>Bloquear</button>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'ativar' acesso.id %}" id="a-no-decoration">
+                                <button id="item-lista-botoes" class="btn btn-info col-md-2" title='Desbloquear acesso do usuário {{acesso.nome}}'>Desbloquear</button>
+                            </a>
+                        {% endif %}
+
+                        <a  data-action='share/whatsapp/share' onclick="window.open('https://api.whatsapp.com/send?text=Olá {{ acesso.nome }}, para acessar digite no login seu CPF:{{ acesso.cpf }} e Senha:{{ acesso.senha }}. http://raach.com.br/');" href='#' title='Compartilhar no WhatsApp acesso do usuário {{acesso.nome}}'>
+                            <button id="item-lista-botoes" class="btn btn-info col-md-2">
+                                Email
+                            </button>
+                        </a>
+
+                    
+                        <a  data-action='share/whatsapp/share' onclick="window.open('https://api.whatsapp.com/send?text=Olá {{ acesso.nome }}, para acessar digite no login seu CPF:{{ acesso.cpf }} e Senha:{{ acesso.senha }}. http://raach.com.br/');" href='#' title='Compartilhar no WhatsApp acesso do usuário {{acesso.nome}}'>
+                            <button id="item-lista-botoes" class="btn btn-success col-md-2">
+                                WhatsApp
+                            </button>
+                        </a>
+                    
+
+                </li>
+            {% endfor %}
+        </ul> 
+    </section>
+
+{% endblock %}

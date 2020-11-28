@@ -1,0 +1,1 @@
+web: gunicorn acesso_spy.wsgi --log-file -

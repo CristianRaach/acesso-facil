@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+
+{% block title %} Acessar {% endblock %}
+
+{% block main %}
+
+    <div class="branco">
+        {% if acessos %}
+            <h1>Nome:{{ acessos.nome }}</h1>
+            <p>CPF:{{ acessos.cpf }}</p>
+        {% else %}
+            <h1>Usuário não encontrado.</h1>
+        {% endif %}
+
+    <!--Foto-->
+
+            <div id="foto-acesso" class="col-12">
+                <img class="col-12 image centered" src="/media/{{ acessos.foto }}" alt=""> 
+            </div>
+
+    <!--Qr Code-->
+            <div id="qr-acesso" class="col-12">
+                <input id="text" type="hidden" value="88800015" style="width:80%" />
+                <div id="qrcode" class="col-12">
+
+                </div>
+            </div>
+    
+    </div>
+
+{% endblock %}

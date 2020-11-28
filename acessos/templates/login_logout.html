@@ -1,0 +1,75 @@
+{% load static %}
+{% load bootstrap %}
+
+<!DOCTYPE HTML>
+<html lang="pt-br">
+<head>
+  <title>{% block title %} {% endblock %}</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+  <meta name="author" content="Cristian Raach">
+</head>
+<body class="is-preload">
+
+
+<div class="container">  
+
+    {% if form.errors %}
+    <p>Seu nome de usuário e senha não coincidem. Por favor, tente novamente.</p>
+    {% endif %}
+
+    {% if cor_login %} 
+        {{ cor_login|safe }}
+    {% else %}
+        <div class="login-spy">
+    {% endif %}
+        <div class="form-login">
+            <h2 class="text-center h2-home">{{ action|safe }}</h2>                      
+            
+            {% if user.is_authenticated %}
+                {% if user.first_name %}
+                    <h6 class="text-center h6-login oi">Olá {{ user.first_name }}</h6>
+                {% else %}
+                    <h6 class="text-center h6-login oi">Olá {{ user.username }}</h6>
+                {% endif %}
+                <a href="{% url 'lista' %}"><button class="btn btn-success btn-block col-md-12 oi">Entrar</button></a>
+                <a href="{% url 'logout' %}"><button class="btn btn-danger btn-block col-md-12 oi">Sair</button></a>
+            {% else %}
+                <h2 class="h2-home">Login</h2>
+
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="form-group col-md-12 form-input">    
+                        <label class="control-label" for="id_nome">CPF</label>
+                        <div>
+                            <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" class=" form-control" required="" id="id_username">
+                        </div>
+                    </div> 
+           
+
+                    <div class="form-group col-md-12 form-input">    
+                        <label class="control-label" for="id_nome">Senha</label>
+                        <div>
+                            <input type="password" name="password" autocomplete="current-password" class=" form-control" required="" id="id_password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block col-md-12">ACESSO</button>
+                        <p><a id="a-esqueceu" href="{% url 'esqueci' %}">Esqueceu a senha?</a></p>
+                    </div>
+                    
+                </form>
+                
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>      
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+ 
+</body>
+</html>

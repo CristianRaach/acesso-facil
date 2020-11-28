@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block title %}
+{% if cadastro %}
+{{ cadastro.nome }}
+{% else %}
+Novo Acesso
+{% endif %}
+{% endblock %}
+
+{% block main %}
+<div class="branco" >       
+    <form id="acesso-form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div  class="form-row">
+            <div class="form-group col-md-6">    
+                <label class="control-label" for="id_nome">Nome</label>
+                <div class=" ">
+                    <input type="text" name="nome" maxlength="30" class="form-control" required="" id="id_nome" value="{{ cadastro.nome }}">
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">  
+                <label class="control-label" for="id_celular">Celular</label>
+                <div class=" ">
+                    <input type="text" name="celular" maxlength="14" minlength="10" class=" form-control" required="" id="id_celular" value="{{ cadastro.celular }}">
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="control-label  " for="id_cpf">Cpf</label>
+                <div class=" ">
+                    <input type="text" name="cpf" minlength="11" class=" form-control" required="" id="id_cpf" value="{{ cadastro.cpf }}"> 
+                </div>
+            </div>
+            <div class="form-group col-md-6">  
+                <label class="control-label  " for="id_senha">Senha</label>
+                <div class=" ">
+                    <input type="text" name="senha" maxlength="4" minlength="4" class=" form-control" required="" id="id_senha" value="{{ cadastro.senha }}">
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="form-group">    
+            <label class="control-label  " for="id_email">Email</label>
+            <div class=" ">
+                <input type="email" name="email" maxlength="254" class=" form-control" required="" id="id_email" value="{{ cadastro.email }}">
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="control-label  " for="id_data_ini">Data inicial</label>
+                <div class=" ">
+                    <input type="datetime-local" name="data_ini" class="form-control" required="" id="id_data_ini" value="{{ cadastro.data_ini|date:"Y-m-d" }}T{{ cadastro.data_ini|time:"H:i" }}">  
+                </div>
+            </div>
+            <div class="form-group col-md-6">    
+                <label class="control-label  " for="id_data_fim">Data final</label>
+                <div class=" ">
+                    <input type="datetime-local" name="data_fim" class="form-control" required="" id="id_data_fim" value="{{ cadastro.data_fim|date:"Y-m-d" }}T{{ cadastro.data_fim|time:"H:i" }}">
+                </div>  
+            </div>
+        </div>
+
+
+        <div class="form-group">  
+            <label class="control-label  " for="id_foto">Foto</label>
+            <div class=" ">
+                {% if cadastro %}
+                <p class="file-upload">Atualmente: <a href="/media/{{ cadastro.foto }}">{{ cadastro.foto }}</a><br>
+                Modificar:
+                {% endif %}
+                <input type="file" name="foto" accept="image/*" id="id_foto" value="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label  " for="id_obs">Obs</label>
+            <div class=" ">
+                <textarea name="obs" cols="40" rows="10" maxlength="150" class=" form-control" id="id_obs" value="{{ cadastro.obs }}"></textarea>  
+            </div>
+        </div>
+
+        <button class="btn btn-success" type="submit">Salvar</button>
+    </form>
+</div>
+    
+
+{% endblock %}
